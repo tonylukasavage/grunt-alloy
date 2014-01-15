@@ -1,0 +1,45 @@
+{
+  "name": "grunt-alloy",
+  "description": "grunt plugin for Appcelerator's Alloy framework for Titanium",
+  "version": "0.0.1",
+  "homepage": "https://github.com/tonylukasavage/grunt-alloy",
+  "author": {
+    "name": "Tony Lukasavage",
+    "email": "anthony.lukasavage@gmail.com",
+    "url": "http://tonylukasavage.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tonylukasavage/grunt-alloy.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tonylukasavage/grunt-alloy/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/tonylukasavage/grunt-alloy/blob/master/LICENSE-MIT"
+    }
+  ],
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "devDependencies": {
+    "grunt-contrib-jshint": "~0.6.0",
+    "grunt-contrib-clean": "~0.4.0",
+    "grunt-contrib-nodeunit": "~0.2.0",
+    "grunt": "~0.4.2"
+  },
+  "peerDependencies": {
+    "grunt": "~0.4.2"
+  },
+  "keywords": [
+    "gruntplugin"
+  ],
+  "dependencies": {
+    "alloy": "~1.3.0"
+  }
+}
