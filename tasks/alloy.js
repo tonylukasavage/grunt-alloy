@@ -8,43 +8,67 @@
 
 'use strict';
 
+var child_process = require('child_process'),
+  exec = child_process.exec,
+  path = require('path'),
+  spawn = child_process.spawn;
+
 module.exports = function(grunt) {
 
-  // Please see the Grunt documentation for more information regarding task
-  // creation: http://gruntjs.com/creating-tasks
+  grunt.registerMultiTask('alloy', 'grunt plugin for Appcelerator\'s Alloy framework for Titanium', function() {
 
-  grunt.registerMultiTask('alloy', 'grunt plugin for Appcelerator's Alloy framework for Titanium', function() {
-    // Merge task-specific and/or target-specific options with these defaults.
-    var options = this.options({
-      punctuation: '.',
-      separator: ', '
+    var ALLOY = process.env.GRUNT_ALLOY_TEST ? path.resolve('node_modules', '.bin', 'alloy') :
+      path.resolve('node_modules', 'grunt-alloy', 'node_modules', '.bin', 'alloy');
+
+    var options = this.options(),
+      command = options.command || 'compile',
+      done = this.async(),
+      extraArgs = [];
+
+    extraArgs = (options.args || []).slice(0);
+    delete options.args;
+    delete options.command;
+
+    // execute the alloy command
+    var args = [];
+
+    // create the list of command arguments
+    Object.keys(options).forEach(function(key) {
+      var value = options[key],
+        isBool = isBoolean(value);
+      if (!isBool || (isBool && !!value)) {
+        args.push(camelCaseToDash(key));
+      }
+      if (!isBool) { args.push(value); }
+    });
+    args.unshift(command);
+
+    // add non-option, non-flag arguments
+    args = args.concat(extraArgs).concat('--noBanner');
+
+    // spawn command and output
+    grunt.log.writeln(ALLOY + ' ' + args.join(' '));
+    var alloy = spawn(ALLOY, args);
+    alloy.stdout.on('data', function(data) {
+      process.stdout.write(data);
+    });
+    alloy.stderr.on('data', function(data) {
+      process.stdout.write(data);
+    });
+    alloy.on('close', function(code) {
+      grunt.log[code ? 'error' : 'ok']('alloy ' + command + ' ' + (code ? 'failed' : 'complete') + '.');
+      return done(code);
     });
 
-    // Iterate over all specified file groups.
-    this.files.forEach(function(f) {
-      // Concat specified files.
-      var src = f.src.filter(function(filepath) {
-        // Warn on and remove invalid source files (if nonull was set).
-        if (!grunt.file.exists(filepath)) {
-          grunt.log.warn('Source file "' + filepath + '" not found.');
-          return false;
-        } else {
-          return true;
-        }
-      }).map(function(filepath) {
-        // Read file source.
-        return grunt.file.read(filepath);
-      }).join(grunt.util.normalizelf(options.separator));
-
-      // Handle options.
-      src += options.punctuation;
-
-      // Write the destination file.
-      grunt.file.write(f.dest, src);
-
-      // Print a success message.
-      grunt.log.writeln('File "' + f.dest + '" created.');
-    });
   });
 
 };
+
+function camelCaseToDash(str) {
+  if (typeof str !== 'string') { return str; }
+  return '--' + str.replace(/([A-Z])/g, function(m) { return '-' + m.toLowerCase(); });
+}
+
+function isBoolean(obj) {
+  return obj === true || obj === false || Object.prototype.toString.call(obj) === '[object Boolean]';
+}

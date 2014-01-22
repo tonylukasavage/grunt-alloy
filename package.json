@@ -1,7 +1,7 @@
 {
   "name": "grunt-alloy",
   "description": "grunt plugin for Appcelerator's Alloy framework for Titanium",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "homepage": "https://github.com/tonylukasavage/grunt-alloy",
   "author": {
     "name": "Tony Lukasavage",
@@ -31,15 +31,19 @@
     "grunt-contrib-jshint": "~0.6.0",
     "grunt-contrib-clean": "~0.4.0",
     "grunt-contrib-nodeunit": "~0.2.0",
-    "grunt": "~0.4.2"
+    "grunt": "~0.4.2",
+    "grunt-titanium": "~0.1.0"
   },
   "peerDependencies": {
     "grunt": "~0.4.2"
   },
   "keywords": [
-    "gruntplugin"
+    "gruntplugin",
+    "titanium",
+    "alloy",
+    "appcelerator"
   ],
   "dependencies": {
-    "alloy": "~1.3.0"
+    "alloy": ">=1.3.0 <2.0"
   }
 }

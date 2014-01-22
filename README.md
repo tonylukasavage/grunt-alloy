@@ -1,5 +1,3 @@
-> !!! _NOT YET FUNCTIONAL_ !!!
-
 # grunt-alloy
 
 > grunt plugin for Appcelerator's Alloy framework for Titanium
@@ -39,53 +37,70 @@ grunt.initConfig({
 
 ### Options
 
-#### options.separator
+#### options.command
 Type: `String`
-Default value: `',  '`
+Default value: `compile`
 
-A string value that is used to do something with whatever.
+The command to execute with alloy.
 
-#### options.punctuation
-Type: `String`
-Default value: `'.'`
+#### options.args
+Type: `Array`,
+Default value: `[]`
 
-A string value that is used to do something else with whatever else.
+All the non-flag, non-option arguments to pass to alloy. For example, `alloy new /path/to/project` would be created as
 
-### Usage Examples
-
-#### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
-
-```js
+```javascript
 grunt.initConfig({
   alloy: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
+    all: {
+      options: {
+        command: 'new',
+        args: ['/path/to/project']
+      }
+    }
+  }
 });
 ```
 
-#### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
+#### options...
+
+The rest of the options and flags are the same as the those available to the Alloy CLI. You can see this list like this by typing `alloy`. The options should be named as camel case as opposed to the dashed format used by some of the CLI, making them easier to use as keys in your options. For example, `--project-dir` becomes `projectDir`. More details in the examples below.
+
+#### flags
+
+Flags like `--no-colors` should be given a boolean value.
 
 ```js
 grunt.initConfig({
   alloy: {
-    options: {
-      separator: ': ',
-      punctuation: ' !!!',
-    },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
+    all: {
+      options: {
+        command: 'compile',
+        noColors: false
+      }
+    }
+  }
 });
+```
+
+### Usage Examples
+
+There's a few practical usage examples in this repo's [Gruntfile.js](Gruntfile.js). Aside from that, here's a few more examples.
+
+#### Make a new Alloy project
+
+Assuming the a traditional Titanium project already exists at `/path/to/project`, this would turn it into an Alloy project.
+
+```javascript
+alloy: {
+  all: {
+    options: {
+      command: 'new',
+      args: ['/path/to/project']
+    }
+  }
+}
 ```
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
-
-## Release History
-_(Nothing yet)_

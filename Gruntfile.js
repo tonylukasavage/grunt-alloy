@@ -8,6 +8,10 @@
 
 'use strict';
 
+var path = require('path');
+
+var TEST_APP = 'grunt-alloy-app';
+
 module.exports = function(grunt) {
 
   // Project configuration.
@@ -16,7 +20,7 @@ module.exports = function(grunt) {
       all: [
         'Gruntfile.js',
         'tasks/*.js',
-        '<%= nodeunit.tests %>',
+        'test/*_test.js',
       ],
       options: {
         jshintrc: '.jshintrc',
@@ -28,29 +32,29 @@ module.exports = function(grunt) {
       tests: ['tmp'],
     },
 
-    // Configuration to be run (and then tested).
-    alloy: {
-      default_options: {
+    titanium: {
+      create: {
         options: {
-        },
-        files: {
-          'tmp/default_options': ['test/fixtures/testing', 'test/fixtures/123'],
-        },
-      },
-      custom_options: {
-        options: {
-          separator: ': ',
-          punctuation: ' !!!',
-        },
-        files: {
-          'tmp/custom_options': ['test/fixtures/testing', 'test/fixtures/123'],
-        },
-      },
+          command: 'create',
+          name: TEST_APP,
+          workspaceDir: 'tmp'
+        }
+      }
     },
 
-    // Unit tests.
+    // Configuration to be run (and then tested).
+    alloy: {
+      should_new: {
+        options: {
+          command: 'new',
+          args: [path.resolve('tmp', TEST_APP)]
+        }
+      }
+    },
+
+    // unit tests
     nodeunit: {
-      tests: ['test/*_test.js'],
+      src: ['test/*_test.js'],
     },
 
   });
@@ -62,10 +66,16 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
+  grunt.loadNpmTasks('grunt-titanium');
+
+  // install in a Titanium project, if present
+  grunt.registerTask('test-env', function() {
+    process.env.GRUNT_ALLOY_TEST = '1';
+  });
 
   // Whenever the "test" task is run, first clean the "tmp" dir, then run this
   // plugin's task(s), then test the result.
-  grunt.registerTask('test', ['clean', 'alloy', 'nodeunit']);
+  grunt.registerTask('test', ['test-env', 'titanium', 'alloy', 'nodeunit', 'clean']);
 
   // By default, lint and run all tests.
   grunt.registerTask('default', ['jshint', 'test']);
