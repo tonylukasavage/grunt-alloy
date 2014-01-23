@@ -53,6 +53,24 @@ module.exports = function(grunt) {
         }
       },
 
+      // create a controller
+      should_generate_controller: {
+        options: {
+          command: 'generate',
+          outputPath: path.resolve('tmp', TEST_APP),
+          args: ['controller', 'test1']
+        }
+      },
+
+      // create a model
+      should_generate_model: {
+        options: {
+          command: 'generate',
+          outputPath: path.resolve('tmp', TEST_APP),
+          args: ['model', 'modelname', 'sql', 'id:INTEGER']
+        }
+      },
+
       // compile the default alloy app
       should_compile: {
         options: {
