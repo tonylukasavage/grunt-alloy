@@ -1,7 +1,7 @@
 {
   "name": "grunt-alloy",
   "description": "grunt plugin for Appcelerator's Alloy framework for Titanium",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "homepage": "https://github.com/tonylukasavage/grunt-alloy",
   "author": {
     "name": "Tony Lukasavage",
