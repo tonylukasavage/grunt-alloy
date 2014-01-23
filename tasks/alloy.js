@@ -20,7 +20,10 @@ module.exports = function(grunt) {
     var ALLOY = process.env.GRUNT_ALLOY_TEST ? path.resolve('node_modules', '.bin', 'alloy') :
       path.resolve('node_modules', 'grunt-alloy', 'node_modules', '.bin', 'alloy');
 
-    var options = this.options(),
+    var options = this.options({
+        noBanner: true,
+        logLevel: 1
+      }),
       command = options.command || 'compile',
       done = this.async(),
       extraArgs = [];
@@ -37,14 +40,18 @@ module.exports = function(grunt) {
       var value = options[key],
         isBool = isBoolean(value);
       if (!isBool || (isBool && !!value)) {
-        args.push(camelCaseToDash(key));
+        if (key === 'noBanner' || key === 'logLevel' || key === 'outputPath') {
+          args.push('--' + key);
+        } else {
+          args.push(camelCaseToDash(key));
+        }
       }
       if (!isBool) { args.push(value); }
     });
     args.unshift(command);
 
     // add non-option, non-flag arguments
-    args = args.concat(extraArgs).concat('--noBanner');
+    args = args.concat(extraArgs);
 
     // spawn command and output
     grunt.log.writeln(ALLOY + ' ' + args.join(' '));

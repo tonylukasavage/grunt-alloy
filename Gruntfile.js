@@ -44,12 +44,24 @@ module.exports = function(grunt) {
 
     // Configuration to be run (and then tested).
     alloy: {
+
+      // create a new alloy app
       should_new: {
         options: {
           command: 'new',
           args: [path.resolve('tmp', TEST_APP)]
         }
+      },
+
+      // compile the default alloy app
+      should_compile: {
+        options: {
+          command: 'compile',
+          platform: 'ios',
+          outputPath: path.resolve('tmp', TEST_APP)
+        }
       }
+
     },
 
     // unit tests
