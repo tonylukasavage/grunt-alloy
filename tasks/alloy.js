@@ -8,10 +8,8 @@
 
 'use strict';
 
-var child_process = require('child_process'),
-  exec = child_process.exec,
-  path = require('path'),
-  spawn = child_process.spawn;
+var path = require('path'),
+  spawn = require('child_process').spawn;
 
 module.exports = function(grunt) {
 
