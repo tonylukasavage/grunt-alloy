@@ -1,13 +1,3 @@
-/*
- * grunt-alloy
- * https://github.com/tonylukasavage/grunt-alloy
- *
- * Copyright (c) 2014 Tony Lukasavage
- * Licensed under the MIT license.
- */
-
-'use strict';
-
 var path = require('path');
 
 var TEST_APP = 'grunt-alloy-app';
@@ -17,14 +7,10 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
     jshint: {
-      all: [
-        'Gruntfile.js',
-        'tasks/*.js',
-        'test/*_test.js',
-      ],
       options: {
-        jshintrc: '.jshintrc',
+        jshintrc: true,
       },
+      src: [ 'tasks/*.js', 'test/*_test.js' ]
     },
 
     // Before generating any new files, remove any previously-created files.
