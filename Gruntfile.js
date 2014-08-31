@@ -70,7 +70,7 @@ module.exports = function(grunt) {
 
     // unit tests
     nodeunit: {
-      src: ['test/*_test.js'],
+      src: ['test/*_test.js']
     },
 
   });
