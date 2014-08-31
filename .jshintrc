@@ -1,13 +1,31 @@
 {
+  "globals": {
+    "Ti": false,
+    "Titanium": false,
+    "Alloy": false,
+    "describe": false,
+    "it": false,
+    "before": false,
+    "beforeEach": false,
+    "after": false,
+    "afterEach": false,
+    "should": false
+  },
+  "camelcase": true,
   "curly": true,
   "eqeqeq": true,
   "immed": true,
-  "latedef": true,
+  "indent": 4,
+  "latedef": "nofunc",
   "newcap": true,
   "noarg": true,
-  "sub": true,
+  "nonew": true,
   "undef": true,
-  "boss": true,
-  "eqnull": true,
-  "node": true
+  "unused": true,
+  "trailing": true,
+  "loopfunc": true,
+  "proto": true,
+  "node": true,
+  "-W104": true,
+  "-W068": true
 }
